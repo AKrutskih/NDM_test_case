@@ -10,4 +10,11 @@
         }                                                                       \
     } while (0)
 
+enum class Status : int
+{
+    STOP = 0,
+    RUN = 1,
+    SHUTDOWN = 2
+};
+
 #endif

@@ -11,8 +11,7 @@ endif()
 message(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 
 include_directories(
-    src/tcp
-    src/udp
+    src
 )
 
 add_library(udp_socket STATIC
@@ -27,5 +26,9 @@ add_library(epoll STATIC
     src/epoll/epoll.cpp
 )
 
+add_library(handler STATIC
+    src/handler/handler.cpp
+)
+
 add_executable(main_NDM main.cpp)
-target_link_libraries(main_NDM PRIVATE udp_socket tcp_socket epoll)
+target_link_libraries(main_NDM PRIVATE udp_socket tcp_socket epoll handler)
