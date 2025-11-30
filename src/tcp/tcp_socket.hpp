@@ -16,13 +16,14 @@ public:
 
     int init(int port);
     int acceptClient(sockaddr_in& clientAddr);
-    int sendToClient(int clientFd, const char* buffer, size_t size);
-    int receiveFromClient(int clientFd, char* buffer, size_t size);
+    int send(int clientFd, const char* buffer, size_t size);
+    int receive(int clientFd, char* buffer, size_t size);
+    int fd();
 
-    int fd() const { return _socketFd; }
+    static int nonBlockingFd(int fd);
 
 private:
-    int _socketFd;
+    int _socketFd {-1};
 };
 
 #endif

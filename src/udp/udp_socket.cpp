@@ -49,13 +49,13 @@ int UdpSocket::init(int port)
     return ::fcntl(_socketFd, F_SETFL, flags | O_NONBLOCK);
 }
 
-int UdpSocket::receiveFrom(char* buffer, size_t size, sockaddr_in& clientAddr)
+int UdpSocket::receive(char* buffer, size_t size, sockaddr_in& clientAddr)
 {
     socklen_t client_len = sizeof(clientAddr);
     return ::recvfrom(_socketFd, buffer, size, 0, (sockaddr*)&clientAddr, &client_len);
 }
 
-int UdpSocket::sendTo(const char* buffer, size_t size, const sockaddr_in& clientAddr)
+int UdpSocket::send(const char* buffer, size_t size, const sockaddr_in& clientAddr)
 {
     socklen_t client_len = sizeof(clientAddr);
     return ::sendto(_socketFd, buffer, size, 0, (sockaddr*)&clientAddr, client_len);

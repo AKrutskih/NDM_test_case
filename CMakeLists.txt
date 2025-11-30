@@ -15,17 +15,17 @@ include_directories(
     src/udp
 )
 
-# add_library(server STATIC
-#     src/server.cpp
-# )
-
 add_library(udp_socket STATIC
-    src/udp/udp_socket.cpp
+src/udp/udp_socket.cpp
 )
 
 add_library(tcp_socket STATIC
-    src/tcp/tcp_socket.cpp
+src/tcp/tcp_socket.cpp
+)
+
+add_library(epoll STATIC
+    src/epoll/epoll.cpp
 )
 
 add_executable(main_NDM main.cpp)
-target_link_libraries(main_NDM PRIVATE udp_socket tcp_socket)
+target_link_libraries(main_NDM PRIVATE udp_socket tcp_socket epoll)

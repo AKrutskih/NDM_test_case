@@ -35,8 +35,8 @@ int TcpSocket::init(int port)
     tcpAddr.sin_addr.s_addr = INADDR_ANY;
     tcpAddr.sin_port = ::htons(port);
 
-    int opt = 1;
-    ::setsockopt(_socketFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    int optval = 1;
+    ::setsockopt(_socketFd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
     
     if (::bind(_socketFd, (sockaddr*)&tcpAddr, sizeof(tcpAddr)) < 0)
     {
@@ -50,13 +50,7 @@ int TcpSocket::init(int port)
         return -1;
     }
 
-    int flags = ::fcntl(_socketFd, F_GETFL, 0);
-    if (flags < 0)
-    {
-        return flags;
-    }
-
-    return ::fcntl(_socketFd, F_SETFL, flags | O_NONBLOCK);
+    return nonBlockingFd(_socketFd);
 }
 
 int TcpSocket::acceptClient(sockaddr_in& clientAddr)
@@ -65,12 +59,28 @@ int TcpSocket::acceptClient(sockaddr_in& clientAddr)
     return ::accept(_socketFd, (sockaddr*)&clientAddr, &clientLen);
 }
 
-int TcpSocket::sendToClient(int clientFd, const char* buffer, size_t size)
+int TcpSocket::send(int clientFd, const char* buffer, size_t size)
 {
     return ::send(clientFd, buffer, size, 0);
 }
 
-int TcpSocket::receiveFromClient(int clientFd, char* buffer, size_t size)
+int TcpSocket::receive(int clientFd, char* buffer, size_t size)
 {
     return ::recv(clientFd, buffer, size, 0);
+}
+
+int TcpSocket::fd()
+{
+    return _socketFd;
+}
+
+int TcpSocket::nonBlockingFd(int fd)
+{
+    int flags = ::fcntl(fd, F_GETFL, 0);
+    if (flags < 0)
+    {
+        return flags;
+    }
+
+    return ::fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 }

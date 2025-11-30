@@ -13,8 +13,8 @@ public:
     UdpSocket& operator=(UdpSocket&& other) = delete;
 
     int init(int port);
-    int receiveFrom(char* buffer, size_t size, sockaddr_in& clientAddr);
-    int sendTo(const char* buffer, size_t size, const sockaddr_in& clientAddr);
+    int receive(char* buffer, size_t size, sockaddr_in& clientAddr);
+    int send(const char* buffer, size_t size, const sockaddr_in& clientAddr);
     int fd();
 
 private:
