@@ -1,0 +1,7 @@
+Package: nmdServer
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Andrey K <andrey.k.working@gmail.com>
+Description: NDM server

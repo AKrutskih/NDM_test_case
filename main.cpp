@@ -47,7 +47,7 @@ int main()
     char buffer[BUFFER_SIZE];
 
     status = Status::RUN;
-    ::printf("Server started on port %d\n", PORT);
+    ::printf("Server started on port %d\n", PORT); /* @todo Add loger */
 
     while (status == Status::RUN)
     {
@@ -98,7 +98,8 @@ int main()
 
                     TcpSocket::nonBlockingFd(clientFd);
 
-                    epoll.addFd(clientFd, EPOLLIN | EPOLLET);
+                    retVal = epoll.addFd(clientFd, EPOLLIN | EPOLLET);
+                    CHECK_RETVAL(retVal);
                 }
             }
             /* tcp data */
